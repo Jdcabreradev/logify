@@ -53,6 +53,16 @@ func NewLogger(module, consumer, env, logDirPath string) *Logger {
 	}
 }
 
+// ConditionalLog checks a condition and calls the Log method if the condition is true.
+// This wrapper function helps in deciding whether to log a message based on a conditional check.
+func (l *Logger) ConditionalLog(shouldLog bool, logType LogType, message string) {
+	// Check the condition.
+	if shouldLog {
+		// If the condition is true, call the original Log method.
+		l.Log(logType, message)
+	}
+}
+
 // Log prints a formatted message to standard output and saves to file if saveLogs is configured.
 // Prints a formatted message to the standard output and saves it to the file if configured.
 func (l *Logger) Log(logType LogType, message string) {
