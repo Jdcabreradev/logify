@@ -16,5 +16,6 @@ func main() {
 	// Simulate application execution
 	time.Sleep(2 * time.Second)
 
+	//End of file
 	logger.Log(logify.ERROR, "This is an error message.")
 }
