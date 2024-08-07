@@ -43,11 +43,11 @@ LogType: Un tipo enumerado para los diferentes tipos de logs (INFO, WARNING, ERR
 package main
 
 import (
-    "github.com/Jdcabreradev/logify"
+    "github.com/Jdcabreradev/logify/v2"
 )
 
 func main() {
-    logger := logify.NewLogger("MiModulo", "MiConsumidor", "development")
+    logger := logify.NewLogger("MiModulo", "MiConsumidor", "development","./logs/")
 
     logger.Log(logify.INFO, "Este es un mensaje informativo.")
     logger.Log(logify.WARNING, "Este es un mensaje de advertencia.")
@@ -62,12 +62,12 @@ func main() {
 package main
 
 import (
-	"github.com/Jdcabreradev/logify"
+	"github.com/Jdcabreradev/logify/v2"
 )
 
 func main() {
 	logify.SetColor(logify.INFO, logify.Cyan) // Cambiar color de INFO a cyan
-	logger := logify.NewLogger("MiModulo", "MiConsumidor", "development")
+	logger := logify.NewLogger("MiModulo", "MiConsumidor", "development","./logs/")
 
 	logger.Log(logify.INFO, "Este es un mensaje informativo en cyan.")
 }
