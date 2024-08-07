@@ -12,7 +12,7 @@ Logify es una biblioteca de registro simple y configurable para aplicaciones Go.
 Para instalar Logify, puedes usar `go get`:
 
 ```sh
-go get github.com/Jdcabreradev/logify
+go get github.com/Jdcabreradev/logify/v2
 ```
 
 ## Casos de uso
