@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/Jdcabreradev/logify"
+	"github.com/Jdcabreradev/logify/v2"
 )
 
 func main() {

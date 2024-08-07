@@ -1,5 +1,6 @@
 package logify
 
+//TODO: fix README.md for the v2.0.0 release
 import (
 	"fmt"
 	"os"
