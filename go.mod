@@ -1,3 +1,3 @@
-module github.com/Jdcabreradev/logify/v2
+module github.com/Jdcabreradev/logify
 
 go 1.22.5
