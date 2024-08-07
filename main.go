@@ -59,7 +59,7 @@ func (l *Logger) Log(logType LogType, message string) {
 		reset,
 		l.module,
 		l.consumer,
-		time.Now().Format(time.RFC3339),
+		time.Now().Format(time.DateTime),
 		message,
 	)
 }
