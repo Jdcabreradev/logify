@@ -27,7 +27,7 @@ Logify se puede utilizar para registrar información, advertencias, errores y me
 
 ### Funciones
 
-- NewLogger(module, consumer, env string) *Logger: Crea una nueva instancia de Logger.
+- NewLogger(module, consumer, env, logDirPath string) *Logger: Crea una nueva instancia de Logger.
 - (*Logger) Log(logType LogType, message string): Imprime un mensaje formateado en la salida estándar.
 - SetColor(logType LogType, color string): Permite cambiar el color de un tipo de log específico.
 
