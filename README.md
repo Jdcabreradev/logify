@@ -6,13 +6,14 @@ Logify es una biblioteca de registro simple y configurable para aplicaciones Go.
 - Colores configurables para diferentes tipos de log.
 - Estructura de logger para gestionar módulos, consumidores y entornos.
 - Salida de log formateada con fecha y hora, tipo de log, consumidor y entorno.
+- Diferentes modos de registro para adaptarse a entornos de desarrollo y producción.
 
 ## Instalación
 
 Para instalar Logify, puedes usar `go get`:
 
 ```sh
-go get github.com/Jdcabreradev/logify/v2
+go get github.com/Jdcabreradev/logify/v3
 ```
 
 ## Casos de uso
@@ -27,13 +28,15 @@ Logify se puede utilizar para registrar información, advertencias, errores y me
 
 ### Funciones
 
-- NewLogger(module, consumer, env, logDirPath string) *Logger: Crea una nueva instancia de Logger.
-- (*Logger) Log(logType LogType, message string): Imprime un mensaje formateado en la salida estándar.
-- SetColor(logType LogType, color string): Permite cambiar el color de un tipo de log específico.
+- New(module, consumer, logDirPath string, env logify_enums.LogifyMode) *Logger: Crea una nueva instancia de Logger.
+- (*Logger) Log(logType logify_enums.LogType, message string): Imprime un mensaje formateado en la salida estándar y opcionalmente lo guarda en un archivo de log.
+- SetColor(logType logify_enums.LogType, color string): Permite cambiar el color de un tipo de log específico.
+
 
 ### Tipo
 
-LogType: Un tipo enumerado para los diferentes tipos de logs (INFO, WARNING, ERROR, DEBUG).
+- LogType: Un tipo enumerado para los diferentes tipos de logs (INFO, WARNING, ERROR, DEBUG).
+- LogifyMode: Un tipo enumerado para los diferentes modos de registro (LogModeDev, LogModeRelease, LogModeVerbose, LogModeHidden).
 
 ## Ejemplos de Uso
 
@@ -43,16 +46,17 @@ LogType: Un tipo enumerado para los diferentes tipos de logs (INFO, WARNING, ERR
 package main
 
 import (
-    "github.com/Jdcabreradev/logify/v2"
+    "github.com/Jdcabreradev/logify/v3"
+    "github.com/Jdcabreradev/logify/v3/enums"
 )
 
 func main() {
-    logger := logify.NewLogger("MiModulo", "MiConsumidor", "development","./logs/")
+    logger := logify.New("MiModulo", "MiConsumidor", "./logs/", enums.LogModeDev)
 
-    logger.Log(logify.INFO, "Este es un mensaje informativo.")
-    logger.Log(logify.WARNING, "Este es un mensaje de advertencia.")
-    logger.Log(logify.ERROR, "Este es un mensaje de error.")
-    logger.Log(logify.DEBUG, "Este es un mensaje de depuración.")
+    logger.Log(enums.INFO, "Este es un mensaje informativo.")
+    logger.Log(enums.WARNING, "Este es un mensaje de advertencia.")
+    logger.Log(enums.ERROR, "Este es un mensaje de error.")
+    logger.Log(enums.DEBUG, "Este es un mensaje de depuración.")
 }
 ```
 
@@ -62,14 +66,16 @@ func main() {
 package main
 
 import (
-	"github.com/Jdcabreradev/logify/v2"
+	"github.com/Jdcabreradev/logify/v3"
+	"github.com/Jdcabreradev/logify/v3/enums"
+	"github.com/Jdcabreradev/logify/v3/colors"
 )
 
 func main() {
-	logify.SetColor(logify.INFO, logify.Cyan) // Cambiar color de INFO a cyan
-	logger := logify.NewLogger("MiModulo", "MiConsumidor", "development","./logs/")
+	logify.SetColor(enums.INFO, colors.Cyan) // Cambiar color de INFO a cyan
+	logger := logify.New("MiModulo", "MiConsumidor", "./logs/", enums.LogModeDev)
 
-	logger.Log(logify.INFO, "Este es un mensaje informativo en cyan.")
+	logger.Log(enums.INFO, "Este es un mensaje informativo en cyan.")
 }
 ```
 

@@ -1,4 +1,4 @@
-package main
+package test
 
 import (
 	"time"
@@ -7,7 +7,7 @@ import (
 	logify_enums "github.com/Jdcabreradev/logify/v3/enums"
 )
 
-func main() {
+func Test() {
 	// Create a logger that will save logs to a new file with a timestamp
 	logger := logify.New("MyModule", "MyConsumer", "./logs", logify_enums.LogModeRelease)
 	defer logger.Close() // Ensure the log file is closed when done
