@@ -24,16 +24,11 @@ var LogColor = map[logify_enums.LogType]string{
 
 // SetColor enables changing the color associated with a specific log type.
 func SetColor(logType logify_enums.LogType, color string) {
-	if _, valid := map[string]bool{
-		Black:   true,
-		Red:     true,
-		Green:   true,
-		Yellow:  true,
-		Blue:    true,
-		Magenta: true,
-		Cyan:    true,
-		White:   true,
-	}[color]; valid {
-		LogColor[logType] = color
+	validColors := []string{Black, Red, Green, Yellow, Blue, Magenta, Cyan, White}
+	for _, c := range validColors {
+		if c == color {
+			LogColor[logType] = color
+			return
+		}
 	}
 }

@@ -26,18 +26,18 @@ func (env LogType) LogTypeParser() string {
 	}
 }
 
-// LoggerMode is an enumerated type for the different logging modes.
-type LoggerMode int
+// LogifyMode is an enumerated type for the different logging modes.
+type LogifyMode int
 
 const (
-	LogModeDev     LoggerMode = iota // Developer mode, prints all logs but does not save them.
+	LogModeDev     LogifyMode = iota // Developer mode, prints all logs but does not save them.
 	LogModeRelease                   // Release mode, prints all logs except DEBUG.
 	LogModeVerbose                   // Verbose mode, print all logs.
 	LogModeHidden                    // Hidden mode, only prints INFO and ERROR logs.
 )
 
-// loggerModeParser converts LoggerMode to a readable string.
-func (env LoggerMode) LoggerModeParser() string {
+// LogifyModeParser converts LoggerMode to a readable string.
+func (env LogifyMode) LogifyModeParser() string {
 	switch env {
 	case LogModeDev:
 		return "DEVELOPER"

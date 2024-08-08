@@ -14,14 +14,14 @@ import (
 type Logger struct {
 	module      string                  // Name of the module generating the logs.
 	consumer    string                  // Name of the consumer or part of the application using the logger.
-	env         logify_enums.LoggerMode // Environment in which the application runs (e.g., Developer, Deployment).
+	env         logify_enums.LogifyMode // Environment in which the application runs (e.g., Developer, Deployment).
 	logDirPath  *string                 // Directory path where log files will be saved.
 	logFilePath string                  // Full path of the current log file.
 	logFile     *os.File                // Pointer to the open log file.
 }
 
 // New creates a new instance of Logger with the specified module, consumer, environment, and log directory.
-func New(module, consumer, logDirPath string, env logify_enums.LoggerMode) *Logger {
+func New(module, consumer, logDirPath string, env logify_enums.LogifyMode) *Logger {
 	var logFilePath string
 	var logFile *os.File
 	var err error
@@ -39,6 +39,9 @@ func New(module, consumer, logDirPath string, env logify_enums.LoggerMode) *Logg
 		logFile, err = os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			printError(err)
+			if logFile != nil {
+				logFile.Close()
+			}
 			return nil
 		}
 	}
@@ -76,30 +79,22 @@ func (l *Logger) Log(logType logify_enums.LogType, message string) {
 
 // printLog handles the logic for printing and optionally saving logs to a file.
 func (l *Logger) printLog(logType logify_enums.LogType, message string, saveToFile bool) {
+	logTypeStr := logType.LogTypeParser()
+	timestamp := time.Now().Format(time.DateTime)
+	mode := l.env.LogifyModeParser()
 
 	consoleMessage := fmt.Sprintf("[%s%s%s] [%s] [%s:%s] %s\n",
-		logify_colors.LogColor[logType],
-		logType.LogTypeParser(),
-		logify_colors.Reset,
-		time.Now().Format(time.DateTime),
-		l.consumer,
-		l.env.LoggerModeParser(),
-		message,
-	)
+		logify_colors.LogColor[logType], logTypeStr, logify_colors.Reset,
+		timestamp, l.consumer, mode, message)
 
 	logFileMessage := fmt.Sprintf("[%s] [%s] [%s:%s] %s\n",
-		logType.LogTypeParser(),
-		time.Now().Format(time.RFC3339),
-		l.consumer,
-		l.env.LoggerModeParser(),
-		message,
-	)
+		logTypeStr, time.Now().Format(time.RFC3339),
+		l.consumer, mode, message)
 
 	fmt.Print(consoleMessage)
 
 	if saveToFile {
-		_, err := l.logFile.WriteString(logFileMessage)
-		if err != nil {
+		if _, err := l.logFile.WriteString(logFileMessage); err != nil {
 			printError(err)
 		}
 	}
@@ -123,7 +118,7 @@ func printError(err error) {
 		logify_colors.Reset,
 		time.Now().Format(time.DateTime),
 		"Logify",
-		logify_enums.LogModeVerbose.LoggerModeParser(),
+		logify_enums.LogModeVerbose.LogifyModeParser(),
 		err.Error(),
 	)
 	fmt.Print(errorMessage)
