@@ -1,3 +1,3 @@
-module github.com/Jdcabreradev/logify/v2
+module github.com/Jdcabreradev/logify/v3
 
-go 1.22.5
+go 1.22.6
